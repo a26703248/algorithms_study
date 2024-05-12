@@ -1,4 +1,4 @@
-package data_sturcture;
+package data_structure;
 
 import java.util.Arrays;
 import java.util.Collection;

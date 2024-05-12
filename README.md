@@ -1,4 +1,4 @@
 # Index
 ### Algorithm
-* [Custom Array List](./src/main/java/data_sturcture/CustomList.java)
+* [Custom Array List](./src/main/java/data_structure/CustomList.java)
 ### data structure
