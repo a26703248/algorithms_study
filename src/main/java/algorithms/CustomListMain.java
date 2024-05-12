@@ -1,9 +1,6 @@
 package algorithms;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class CustomListMain {
 
@@ -23,18 +20,24 @@ public class CustomListMain {
         System.out.println("=================================");
         start = System.currentTimeMillis();
         List<Object> arr2 = new ArrayList<>();
-        arr2.add(1);
-        arr2.add(2);
-        arr2.add(3);
-        arr2.add(4);
         arr2.add(5);
+        arr2.add(6);
+        arr2.add(7);
+        arr2.add(8);
+        arr2.add(9);
 //        arr2.remove(3);
-        arr2.addAll(arr1);
+//        arr2.addAll(arr1);
         end = System.currentTimeMillis();
         System.out.println(arr2);
         System.out.println(arr2.size());
         System.out.println("cost: " + (end-start) + " ms");
         System.out.println("=================================");
+        try {
+            arr2.removeAll(arr1);
+        } catch (Exception e) {
+            // pass
+        }
+        System.out.println(arr2);
     }
 
 }

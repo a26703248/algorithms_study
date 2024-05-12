@@ -8,8 +8,6 @@ public class CustomList implements Collection<Object> {
 
     private static final int DEFAULT_INIT_LENGTH = 10;
 
-    private static final Object[] DEFAULT_EMPTY_ELEMENT_DATA = {};
-
     transient Object[] elementData = {};
 
     private static int size;
@@ -26,23 +24,22 @@ public class CustomList implements Collection<Object> {
 
     @Override
     public boolean contains(Object o) {
-        for (Object elementDatum : elementData)
-            if (elementDatum.equals(o))
+        for (int i = 0; i < size; i++) {
+            if (elementData[i].equals(o))
                 return true;
+        }
         return false;
     }
 
     @Override
     public Iterator<Object> iterator() {
-        // TODO
-        return null;
+        return new Iter();
     }
 
     @Override
     public Object[] toArray() {
         Object[] newArr = new Object[size];
-        System.arraycopy(elementData,0, newArr, 0, size);
-        // TODO
+        System.arraycopy(elementData, 0, newArr, 0, size);
         return newArr;
     }
 
@@ -96,10 +93,47 @@ public class CustomList implements Collection<Object> {
         return true;
     }
 
+    /**
+     *
+     * arr1> 1, 2, 3, 4, 5
+     * arr2> 3
+     *
+     *             X
+     * arr1> 1, 2, 3, 4, 5
+     *               <----
+     *             |
+     *             V
+     * arr1> 1, 2, 4, 5, 5
+     *             |
+     *             V
+     * arr1> 1, 2, 4, 5, null (flush size attribute)
+     */
     @Override
     public boolean removeAll(Collection<?> c) {
-        if (c == null) return false;
-        Object[] targetArr = c.toArray();
+        int r = 0, w = 0;
+
+        try {
+            for (; r < size; r++)
+                if (c.contains(elementData[r]))
+                    elementData[w++] = elementData[r];
+        } finally {
+            // 防止 contains 拋出錯誤時
+            // if contains throw exception save current update
+            if (r != size) {
+                System.arraycopy(elementData, r,
+                        elementData, w,
+                        size - r);
+                w += size - r;
+            }
+            // 將最後元素指定為 null,並更新 size 大小
+            // assign last element is null and update size is new length
+            if (w != size) {
+                // clear to let GC do its work
+                for (int i = w; i < size; i++)
+                    elementData[i] = null;
+                size = w;
+            }
+        }
         return true;
     }
 
@@ -110,7 +144,10 @@ public class CustomList implements Collection<Object> {
 
     @Override
     public void clear() {
-
+        size = 0;
+        for (int i = 0; i < size; i++) {
+            elementData[i] = null;
+        }
     }
 
     @Override
@@ -126,5 +163,25 @@ public class CustomList implements Collection<Object> {
             sb.append(",").append(" ");
         }
         return "[]";
+    }
+
+    private class Iter implements Iterator<Object> {
+
+        int cursor; // 下一個元素
+
+        int lastEl; // 當前元素
+
+        @Override
+        public boolean hasNext() {
+            return cursor != size;
+        }
+
+        @Override
+        public Object next() {
+            int i = cursor;
+            Object[] elementData = CustomList.this.elementData;
+            cursor = i + 1;
+            return elementData[lastEl = i];
+        }
     }
 }
