@@ -70,6 +70,22 @@ public class CustomList implements Collection<Object> {
         return false;
     }
 
+    /**
+     * two collection <br/>
+     * arr1> 1, 2, 3, 4, 5 <br/>
+     * arr2> 3
+     * <pre>
+     *             X
+     * arr1> 1, 2, 3, 4, 5
+     *               <---- copy and assign element
+     *             |
+     *             V
+     * arr1> 1, 2, 4, 5, 5 <--- assign null for GC clear
+     *             |
+     *             V
+     * arr1> 1, 2, 4, 5, null (update size attribute)
+     * </pre>
+     */
     public boolean remove(int index) {
         // 判斷 index 是否超過長度
         if (size < index) throw new IndexOutOfBoundsException("index " + index + " out of bounds");
@@ -94,19 +110,20 @@ public class CustomList implements Collection<Object> {
     }
 
     /**
-     *
-     * arr1> 1, 2, 3, 4, 5
+     * two collection <br/>
+     * arr1> 1, 2, 3, 4, 5 <br/>
      * arr2> 3
-     *
+     * <pre>
      *             X
      * arr1> 1, 2, 3, 4, 5
-     *               <----
+     *               <---- copy and assign element
      *             |
      *             V
-     * arr1> 1, 2, 4, 5, 5
+     * arr1> 1, 2, 4, 5, 5 <--- assign null for GC clear
      *             |
      *             V
-     * arr1> 1, 2, 4, 5, null (flush size attribute)
+     * arr1> 1, 2, 4, 5, null (update size attribute)
+     * </pre>
      */
     @Override
     public boolean removeAll(Collection<?> c) {
