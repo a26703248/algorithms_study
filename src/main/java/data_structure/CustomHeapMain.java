@@ -16,5 +16,7 @@ public class CustomHeapMain {
         heap.add(5);
         heap.add(4);
         System.out.println(heap);
+        int searchIndex = heap.search(4);
+        System.out.println(searchIndex);
     }
 }
