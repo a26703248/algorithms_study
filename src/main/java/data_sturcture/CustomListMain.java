@@ -1,4 +1,4 @@
-package algorithms;
+package data_sturcture;
 
 import java.util.*;
 
