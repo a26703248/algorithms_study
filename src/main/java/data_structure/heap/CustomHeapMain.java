@@ -1,4 +1,4 @@
-package data_structure;
+package data_structure.heap;
 
 public class CustomHeapMain {
     public static void main(String[] args) {
