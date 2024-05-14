@@ -17,6 +17,7 @@ public class CustomStack implements Stack<Object> {
 
     @Override
     public void push(Object o) {
+        if (o == null) throw new NullPointerException("insert object is null");
         grow();
         stackCapacity[size++] = o;
     }
