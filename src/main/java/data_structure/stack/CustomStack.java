@@ -57,7 +57,7 @@ public class CustomStack implements Stack<Object> {
         Iterator<Object> iter = iterator();
         while (iter.hasNext()) {
             sb.append(iter.next());
-            if (iter.hasNext()) {
+            if (!iter.hasNext()) {
                 sb.append("]");
                 return sb.toString();
             }
