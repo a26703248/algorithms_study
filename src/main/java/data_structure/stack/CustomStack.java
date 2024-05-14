@@ -1,6 +1,7 @@
 package data_structure.stack;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class CustomStack implements Stack<Object> {
 
@@ -10,8 +11,6 @@ public class CustomStack implements Stack<Object> {
 
     private int size;
 
-    private int firstIndex;
-
     public CustomStack() {
         stackCapacity = new Object[DEFAULT_CAPACITY];
     }
@@ -20,7 +19,6 @@ public class CustomStack implements Stack<Object> {
     public void push(Object o) {
         grow();
         stackCapacity[size++] = o;
-        firstIndex = size;
     }
 
     private void grow() {
@@ -34,12 +32,12 @@ public class CustomStack implements Stack<Object> {
     @Override
     public Object pop() {
         if (stackCapacity.length <= 0) throw new IndexOutOfBoundsException("index out of bound");
-        int firstIndex = stackCapacity.length - size-- ;
+        int firstIndex = stackCapacity.length - size--;
         Object o = peek();
         stackCapacity[firstIndex] = null;
         System.arraycopy(stackCapacity, firstIndex,
                 stackCapacity, firstIndex,
-                (stackCapacity.length-firstIndex));
+                (stackCapacity.length - firstIndex));
         return o;
     }
 
@@ -49,12 +47,43 @@ public class CustomStack implements Stack<Object> {
     }
 
     @Override
+    public Iterator<Object> iterator() {
+        return new Iter();
+    }
+
+    @Override
     public String toString() {
         StringBuffer sb = new StringBuffer("[");
-        for (int i = 0; i < size; i++) {
-            sb.append(stackCapacity[i]);
+        Iterator<Object> iter = iterator();
+        while (iter.hasNext()) {
+            sb.append(iter.next());
+            if (iter.hasNext()) {
+                sb.append("]");
+                return sb.toString();
+            }
             sb.append(", ");
         }
-        return sb.append("]").toString();
+        return "[]";
     }
+
+    private class Iter implements Iterator<Object> {
+
+        private int cursor;
+
+        private int lastEl;
+
+        @Override
+        public boolean hasNext() {
+            return CustomStack.this.size != cursor;
+        }
+
+        @Override
+        public Object next() {
+            Object[] stackCapacity = CustomStack.this.stackCapacity;
+            int i = cursor;
+            cursor = i + 1;
+            return stackCapacity[lastEl = i];
+        }
+    }
+
 }

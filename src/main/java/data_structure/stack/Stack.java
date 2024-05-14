@@ -1,5 +1,7 @@
 package data_structure.stack;
 
+import java.util.Iterator;
+
 public interface Stack<T> {
 
     void push(T t);
@@ -7,5 +9,7 @@ public interface Stack<T> {
     T pop();
 
     T peek();
+
+    Iterator<T> iterator();
 
 }
