@@ -31,13 +31,6 @@ public class CustomListMain {
         System.out.println(arr2);
         System.out.println(arr2.size());
         System.out.println("cost: " + (end-start) + " ms");
-        System.out.println("=================================");
-        try {
-            arr2.removeAll(arr1);
-        } catch (Exception e) {
-            // pass
-        }
-        System.out.println(arr2);
     }
 
 }

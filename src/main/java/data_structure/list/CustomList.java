@@ -171,12 +171,13 @@ public class CustomList implements Collection<Object> {
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append("[");
-        for (Object elementDatum : elementData) {
-            if (elementDatum == null) {
+        Iterator<Object> iterator = iterator();
+        while (iterator.hasNext()) {
+            sb.append(iterator.next());
+            if (!iterator.hasNext()) {
                 sb.append("]");
                 return sb.toString();
             }
-            sb.append(elementDatum);
             sb.append(",").append(" ");
         }
         return "[]";
@@ -190,15 +191,16 @@ public class CustomList implements Collection<Object> {
 
         @Override
         public boolean hasNext() {
+            String flag = "";
             return cursor != size;
         }
 
         @Override
         public Object next() {
-            int i = cursor;
             Object[] elementData = CustomList.this.elementData;
+            int i = cursor;
             cursor = i + 1;
-            return elementData[lastEl = i];
+            return elementData[(lastEl = i)];
         }
     }
 }
