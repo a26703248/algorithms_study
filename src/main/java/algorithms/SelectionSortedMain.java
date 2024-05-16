@@ -6,7 +6,6 @@ public class SelectionSortedMain {
 
     public static void main(String[] args) {
         int[] arr = {10, 100, 61, 22, 44, 67, 30, 90, 20, 34};
-        int cursor = 0;
         int count = 0;
         long start = System.currentTimeMillis();
         for (int i = 0; i < arr.length; i++) {
