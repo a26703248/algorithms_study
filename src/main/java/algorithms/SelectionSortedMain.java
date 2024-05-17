@@ -1,11 +1,13 @@
 package algorithms;
 
+import utils.RandomArray;
+
 import java.util.Arrays;
 
 public class SelectionSortedMain {
 
     public static void main(String[] args) {
-        int[] arr = {10, 100, 61, 22, 44, 67, 30, 90, 20, 34};
+        int[] arr = RandomArray.generateRandomArray(RandomArray.testArraySize);
         int count = 0;
         long start = System.currentTimeMillis();
         for (int i = 0; i < arr.length; i++) {
@@ -17,10 +19,9 @@ public class SelectionSortedMain {
                 }
                 count++;
             }
-            System.out.println(Arrays.toString(arr));
         }
         long end = System.currentTimeMillis();
-        System.out.println("result: " + Arrays.toString(arr));
+        // cost: 13486 ms, foreach count: 704982704
         System.out.println("cost: " + (end - start) + " ms, foreach count: " + count);
     }
 }
